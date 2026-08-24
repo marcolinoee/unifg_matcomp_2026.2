@@ -1,0 +1,136 @@
+Ativo = {
+    "Ativo 1",
+    "Ativo 2",
+    "Ativo 3",
+    "Ativo 4",
+    "Ativo 5"
+}
+
+
+Secretaria = {
+    "Saúde",
+    "Educação",
+    "Obras",
+    "Segurança"
+}
+
+
+f = {
+    "Ativo 1": "Saúde",
+    "Ativo 2": "Educação",
+    "Ativo 3": "Obras",
+    "Ativo 4": "Saúde",
+    "Ativo 5": "Segurança"
+}
+
+
+print("=" * 60)
+print("CONJUNTO DOS ATIVOS")
+print("=" * 60)
+
+for ativo in sorted(Ativo):
+    print(ativo)
+
+
+print("\n" + "=" * 60)
+print("CONJUNTO DAS SECRETARIAS")
+print("=" * 60)
+
+for secretaria in sorted(Secretaria):
+    print(secretaria)
+
+
+print("\n" + "=" * 60)
+print("FUNÇÃO f: ATIVO -> SECRETARIA")
+print("=" * 60)
+
+for ativo in sorted(Ativo):
+    print(f"f({ativo}) = {f[ativo]}")
+
+
+
+print("\n" + "=" * 60)
+print("VERIFICAÇÃO DA FUNÇÃO")
+print("=" * 60)
+
+
+# Verifica se todas as imagens pertencem ao conjunto Secretaria
+todas_imagens_validas = all(
+    f[ativo] in Secretaria
+    for ativo in Ativo
+)
+
+if todos_possuem_imagem and todas_imagens_validas:
+    print("f é realmente uma função f: Ativo -> Secretaria.")
+else:
+    print("f NÃO é uma função válida de Ativo -> Secretaria.")
+
+
+imagem = {
+    f[ativo]
+    for ativo in Ativo
+}
+
+print("\n" + "=" * 60)
+print("IMAGEM DA FUNÇÃO Im(f)")
+print("=" * 60)
+
+print("Im(f) =", imagem)
+
+
+
+print("\n" + "=" * 60)
+print("VERIFICAÇÃO DE INJETIVIDADE")
+print("=" * 60)
+
+
+eh_injetora = len(valores) == len(set(valores))
+
+
+if eh_injetora:
+
+    print("A função f É INJETORA.")
+
+    print("\nJustificativa matemática:")
+    print("Não existem dois ativos distintos associados")
+    print("à mesma secretaria.")
+
+else:
+
+    print("A função f NÃO É INJETORA.")
+
+    print("\nJustificativa matemática:")
+
+    
+    for secretaria in Secretaria:
+
+        ativos_mesma_secretaria = [
+            ativo
+            for ativo in Ativo
+            if f[ativo] == secretaria
+        ]
+
+        if len(ativos_mesma_secretaria) > 1:
+
+            print(
+                f"Os ativos {ativos_mesma_secretaria} "
+                f"possuem a mesma imagem: {secretaria}"
+            )
+
+
+print("\n" + "=" * 60)
+print("RESUMO MATEMÁTICO")
+print("=" * 60)
+
+print(f"|Ativo| = {len(Ativo)}")
+print(f"|Secretaria| = {len(Secretaria)}")
+print(f"|Im(f)| = {len(imagem)}")
+
+print("\nIm(f) =", imagem)
+
+if eh_injetora:
+    print("\nConclusão:")
+    print("f é INJETORA porque |Ativo| = |Im(f)|.")
+else:
+    print("\nConclusão:")
+    print("f NÃO é INJETORA porque |Ativo| > |Im(f)|.")

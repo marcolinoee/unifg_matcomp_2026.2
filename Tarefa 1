@@ -1,0 +1,79 @@
+A = {
+    "Hospital",
+    "UPA",
+    "Posto de Saúde"
+}
+
+
+B = {
+    "Boa Viagem",
+    "Pina",
+    "Imbiribeira",
+    "Jaboatão"
+}
+
+print("CONJUNTO A - EQUIPAMENTOS")
+print(A)
+
+print("\nCONJUNTO B - BAIRROS")
+print(B)
+
+
+produto_cartesiano = {
+    (equipamento, bairro)
+    for equipamento in A
+    for bairro in B
+}
+
+print("\n============================================")
+print("PRODUTO CARTESIANO A x B")
+print("============================================")
+
+for par in sorted(produto_cartesiano):
+    print(par)
+
+relacao_atendimento = {
+    ("Hospital", "Boa Viagem"),
+    ("Hospital", "Pina"),
+
+    ("UPA", "Imbiribeira"),
+    ("UPA", "Jaboatão"),
+
+    ("Posto de Saúde", "Boa Viagem"),
+    ("Posto de Saúde", "Imbiribeira")
+}
+
+print("\n============================================")
+print("RELAÇÃO DE ATENDIMENTO")
+print("============================================")
+
+for equipamento, bairro in sorted(relacao_atendimento):
+    print(f"{equipamento} -> {bairro}")
+
+
+if relacao_atendimento.issubset(produto_cartesiano):
+    print("\nA relação de atendimento é válida!")
+    print("Todos os pares pertencem ao produto cartesiano A x B.")
+else:
+    print("\nA relação de atendimento NÃO é válida!")
+
+
+print("\n============================================")
+print("BAIRROS ATENDIDOS POR CADA EQUIPAMENTO")
+print("============================================")
+
+for equipamento in sorted(A):
+
+    bairros_atendidos = {
+        bairro
+        for eq, bairro in relacao_atendimento
+        if eq == equipamento
+    }
+
+    print(f"\n{equipamento}:")
+
+    if bairros_atendidos:
+        for bairro in sorted(bairros_atendidos):
+            print(f"  - {bairro}")
+    else:
+        print("  Nenhum bairro atendido.")

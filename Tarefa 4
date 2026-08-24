@@ -1,0 +1,291 @@
+Ativo = {
+    "Ativo 1",
+    "Ativo 2",
+    "Ativo 3",
+    "Ativo 4",
+    "Ativo 5",
+    "Ativo 6"
+}
+
+
+Tombamento = {
+    "TOMB-901",
+    "TOMB-902",
+    "TOMB-903",
+    "TOMB-904",
+    "TOMB-905",
+    "TOMB-906"
+}
+
+
+Secretaria = {
+    "Saúde",
+    "Educação",
+    "Obras",
+    "Segurança"
+}
+
+
+f = {
+    "Ativo 1": "TOMB-901",
+    "Ativo 2": "TOMB-902",
+    "Ativo 3": "TOMB-903",
+    "Ativo 4": "TOMB-904",
+    "Ativo 5": "TOMB-905",
+    "Ativo 6": "TOMB-906"
+}
+
+
+g = {
+    "TOMB-901": "Saúde",
+    "TOMB-902": "Educação",
+    "TOMB-903": "Obras",
+    "TOMB-904": "Segurança",
+    "TOMB-905": "Saúde",
+    "TOMB-906": "Obras"
+}
+
+
+
+composicao = {}
+
+for ativo in Ativo:
+
+    tombamento = f[ativo]
+
+    secretaria = g[tombamento]
+
+    composicao[ativo] = secretaria
+
+
+print("=" * 70)
+print("PIPELINE DE COMPOSIÇÃO (g o f)")
+print("=" * 70)
+
+for ativo in sorted(Ativo):
+
+    tombamento = f[ativo]
+    secretaria = g[tombamento]
+
+    print(
+        f"{ativo} "
+        f"-> {tombamento} "
+        f"-> {secretaria}"
+    )
+
+
+print("\n" + "=" * 70)
+print("VALIDAÇÃO DO TOMBAMENTO TOMB-901")
+print("=" * 70)
+
+
+tombamento_teste = "TOMB-901"
+
+
+ativos_encontrados = [
+    ativo
+    for ativo in Ativo
+    if f[ativo] == tombamento_teste
+]
+
+
+if tombamento_teste in Tombamento:
+
+    print(f"Tombamento {tombamento_teste}: VÁLIDO")
+
+    if ativos_encontrados:
+
+        ativo = ativos_encontrados[0]
+
+        secretaria = g[tombamento_teste]
+
+        print(f"Ativo encontrado: {ativo}")
+        print(f"Secretaria responsável: {secretaria}")
+
+        print(
+            f"\n(g o f)({ativo}) = "
+            f"g(f({ativo}))"
+        )
+
+        print(
+            f"(g o f)({ativo}) = "
+            f"g({tombamento_teste})"
+        )
+
+        print(
+            f"(g o f)({ativo}) = "
+            f"{secretaria}"
+        )
+
+    else:
+
+        print(
+            "O tombamento existe, mas não está associado "
+            "a nenhum ativo."
+        )
+
+else:
+
+    print(f"Tombamento {tombamento_teste}: INVÁLIDO")
+
+
+def validar_tombamento(tombamento):
+
+    print("\n" + "-" * 70)
+    print(f"VALIDANDO: {tombamento}")
+    print("-" * 70)
+
+
+    
+    if tombamento not in Tombamento:
+
+        print("Resultado: TOMBAMENTO INEXISTENTE")
+        print("O pipeline foi interrompido com segurança.")
+
+        return None
+
+
+    ativos = [
+        ativo
+        for ativo in Ativo
+        if f[ativo] == tombamento
+    ]
+
+
+    if not ativos:
+
+        print("Resultado: TOMBAMENTO SEM ATIVO ASSOCIADO.")
+
+        return None
+
+
+    secretaria = g.get(tombamento)
+
+
+    if secretaria is None:
+
+        print(
+            "Erro: tombamento existe, mas não possui "
+            "secretaria associada."
+        )
+
+        return None
+
+
+
+    print("Resultado: TOMBAMENTO VÁLIDO")
+
+    print(f"Ativo: {ativos[0]}")
+    print(f"Tombamento: {tombamento}")
+    print(f"Secretaria: {secretaria}")
+
+    return secretaria
+
+
+print("\n" + "=" * 70)
+print("TESTE DE ROBUSTEZ DO PIPELINE")
+print("=" * 70)
+
+
+tombamentos_teste = [
+    "TOMB-901",
+    "TOMB-902",
+    "TOMB-999",
+    "TOMB-000",
+    "TOMB-ABC"
+]
+
+
+for tombamento in tombamentos_teste:
+
+    validar_tombamento(tombamento)
+
+
+print("\n" + "=" * 70)
+print("VERIFICAÇÃO MATEMÁTICA DE (g o f)")
+print("=" * 70)
+
+
+composicao_valida = True
+
+
+for ativo in Ativo:
+
+   
+    resultado_f = f[ativo]
+
+
+    
+    resultado_g = g.get(resultado_f)
+
+
+    resultado_composicao = composicao[ativo]
+
+
+    print(
+        f"\n{ativo}:"
+    )
+
+    print(
+        f"f({ativo}) = {resultado_f}"
+    )
+
+    print(
+        f"g({resultado_f}) = {resultado_g}"
+    )
+
+    print(
+        f"(g o f)({ativo}) = {resultado_composicao}"
+    )
+
+
+   
+    if resultado_g != resultado_composicao:
+
+        composicao_valida = False
+
+
+print("\n" + "=" * 70)
+print("RESULTADO FINAL")
+print("=" * 70)
+
+
+if composicao_valida:
+
+    print("A composição (g o f) foi validada com sucesso!")
+
+    print(
+        "\nPara todo ativo x pertencente a Ativo:"
+    )
+
+    print(
+        "(g o f)(x) = g(f(x))"
+    )
+
+else:
+
+    print("Erro na validação da composição.")
+
+
+print("\n" + "=" * 70)
+print("RESUMO DO PIPELINE")
+print("=" * 70)
+
+print("""
+Ativo
+  |
+  | f
+  v
+Tombamento
+  |
+  | g
+  v
+Secretaria
+
+Composição:
+
+(g o f)(Ativo) = g(f(Ativo))
+""")
+
+
+print("Pipeline concluído.")

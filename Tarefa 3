@@ -1,0 +1,196 @@
+
+Ativo = {
+    "Ativo 1",
+    "Ativo 2",
+    "Ativo 3",
+    "Ativo 4",
+    "Ativo 5"
+}
+
+
+Tombamento = {
+    "T001",
+    "T002",
+    "T003",
+    "T004",
+    "T005"
+}
+
+
+f = {
+    "Ativo 1": "T001",
+    "Ativo 2": "T002",
+    "Ativo 3": "T003",
+    "Ativo 4": "T004",
+    "Ativo 5": "T005"
+}
+
+
+print("=" * 60)
+print("FUNÇÃO f: ATIVO -> TOMBAMENTO")
+print("=" * 60)
+
+for ativo in sorted(Ativo):
+    print(f"f({ativo}) = {f[ativo]}")
+
+
+funcao_valida = (
+    set(f.keys()) == Ativo
+    and all(f[ativo] in Tombamento for ativo in Ativo)
+)
+
+print("\n" + "=" * 60)
+print("VERIFICAÇÃO DA FUNÇÃO")
+print("=" * 60)
+
+if funcao_valida:
+    print("f é uma função válida de Ativo -> Tombamento.")
+else:
+    print("f NÃO é uma função válida.")
+
+
+
+valores = list(f.values())
+
+eh_injetora = len(valores) == len(set(valores))
+
+
+print("\n" + "=" * 60)
+print("VERIFICAÇÃO DA INJETIVIDADE")
+print("=" * 60)
+
+if eh_injetora:
+    print("f É INJETORA.")
+    print("Nenhum tombamento está associado a dois ativos diferentes.")
+else:
+    print("f NÃO É INJETORA.")
+    print("Existem ativos diferentes com o mesmo tombamento.")
+
+
+imagem = set(f.values())
+
+
+print("\n" + "=" * 60)
+print("IMAGEM DA FUNÇÃO")
+print("=" * 60)
+
+print("Im(f) =", imagem)
+
+
+eh_sobrejetora = imagem == Tombamento
+
+
+print("\n" + "=" * 60)
+print("VERIFICAÇÃO DA SOBREJETIVIDADE")
+print("=" * 60)
+
+if eh_sobrejetora:
+    print("f É SOBREJETORA.")
+    print("Todo tombamento possui um ativo associado.")
+else:
+    print("f NÃO É SOBREJETORA.")
+    print("Existe pelo menos um tombamento sem ativo associado.")
+
+
+
+
+eh_bijetora = eh_injetora and eh_sobrejetora
+
+
+print("\n" + "=" * 60)
+print("VERIFICAÇÃO DA BIJETIVIDADE")
+print("=" * 60)
+
+if eh_bijetora:
+    print("f É BIJETORA!")
+    print("A função é simultaneamente injetora e sobrejetora.")
+else:
+    print("f NÃO É BIJETORA.")
+
+
+print("\n" + "=" * 60)
+print("FUNÇÃO INVERSA f⁻¹")
+print("=" * 60)
+
+
+if eh_bijetora:
+
+  
+    f_inversa = {
+        tombamento: ativo
+        for ativo, tombamento in f.items()
+    }
+
+    for tombamento in sorted(f_inversa):
+        print(
+            f"f⁻¹({tombamento}) = "
+            f"{f_inversa[tombamento]}"
+        )
+
+else:
+
+    print(
+        "Não é possível construir uma função inversa "
+        "porque f não é bijetora."
+    )
+
+
+
+
+if eh_bijetora:
+
+    print("\n" + "=" * 60)
+    print("VERIFICAÇÃO MATEMÁTICA DA INVERSA")
+    print("=" * 60)
+
+    inversa_valida = True
+
+
+    # Verificação:
+    # f⁻¹(f(x)) = x
+
+    for ativo in Ativo:
+
+        tombamento = f[ativo]
+
+        resultado = f_inversa[tombamento]
+
+        if resultado == ativo:
+            print(
+                f"f⁻¹(f({ativo})) = {resultado} ✓"
+            )
+        else:
+            inversa_valida = False
+            print(
+                f"f⁻¹(f({ativo})) = {resultado} ✗"
+            )
+
+
+
+
+    for tombamento in Tombamento:
+
+        ativo = f_inversa[tombamento]
+
+        resultado = f[ativo]
+
+        if resultado == tombamento:
+            print(
+                f"f(f⁻¹({tombamento})) = {resultado} ✓"
+            )
+        else:
+            inversa_valida = False
+            print(
+                f"f(f⁻¹({tombamento})) = {resultado} ✗"
+            )
+
+
+    print("\n" + "=" * 60)
+    print("RESULTADO FINAL")
+    print("=" * 60)
+
+    if inversa_valida:
+        print("A função inversa foi comprovada com sucesso!")
+        print("f é BIJETORA e possui função inversa.")
+    else:
+        print("A função inversa não foi validada.")

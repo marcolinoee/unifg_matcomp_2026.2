@@ -1,0 +1,64 @@
+# ALUNA: Reisileny Reis
+# CURSO: ADS, 2P, Manhã
+# RA: 1352618156
+
+# ============ DESAFIO 1 ============
+# ==== 1. deduplicar sia set () ====
+alpha = ['SEN-1','SEN-2', 'SEN-3', 'SEN-5', 'SEN-8', 'SEN-1']
+beta = ['SEN-3', 'SEN-4', 'SEN-5', 'SEN-6', 'SEN-9', 'SEN-4']
+
+alpha_deduplicar = list(set(alpha))
+beta_deduplicar = list(set(beta))
+
+print(alpha_deduplicar)
+print(beta_deduplicar)
+
+# ==== 2. calcular total de sensores únicos (A U B) ====
+alpha = ['SEN-1','SEN-2', 'SEN-3', 'SEN-5', 'SEN-8', 'SEN-1']
+beta = ['SEN-3', 'SEN-4', 'SEN-5', 'SEN-6', 'SEN-9', 'SEN-4']
+sensores_unicos = list(set(alpha).union(set(beta)))
+
+total_sensores_unicos = len(sensores_unicos)
+print(total_sensores_unicos)
+
+# ==== 3. identificar sensores redundantes (A ∩ B) ====
+alpha = ['SEN-1','SEN-2', 'SEN-3', 'SEN-5', 'SEN-8', 'SEN-1']
+beta = ['SEN-3', 'SEN-4', 'SEN-5', 'SEN-6', 'SEN-9', 'SEN-4']
+
+sensores_redundantes = list(set(alpha).intersection(set(beta)))
+print(sensores_redundantes)
+
+# ==== 4. identificar exclusivos da Malha Norte (A \ B) ====
+alpha = ['SEN-1','SEN-2', 'SEN-3', 'SEN-5', 'SEN-8', 'SEN-1']
+beta = ['SEN-3', 'SEN-4', 'SEN-5', 'SEN-6', 'SEN-9', 'SEN-4']
+
+exclusivos_malha_norte = list(set(alpha).difference(set(beta)))
+print(exclusivos_malha_norte)
+
+# ==== 5. identificar sensores sem sobreposição (A Δ B) ====
+alpha = ['SEN-1','SEN-2', 'SEN-3', 'SEN-5', 'SEN-8', 'SEN-1']
+beta = ['SEN-3', 'SEN-4', 'SEN-5', 'SEN-6', 'SEN-9', 'SEN-4']
+
+sem_sobreposicao = list(set(alpha).symmetric_difference(set(beta)))
+print(sem_sobreposicao)
+
+
+# ============ DESAFIO 2 ============
+# ==== 1. Escrever função can_execute(user_perms, action). ====
+# ==== 2. Escrever função get_missing_perms(user_perms, req_perms). ====
+# ==== 3. Testar se permissões do operador são subconjunto estrito do admin (operator < admin). ====
+
+U = {'READ', 'EXPORT', 'EDIT', 'DELETE', 'ADMIN'}
+
+def can_execute(user_perms, action):
+    return action in user_perms
+
+def get_missing_perms(user_perms, req_perms):
+    return set(req_perms) - set(user_perms)
+
+operador_perms = {'READ', 'EXPORT', 'EDIT'}
+admin_perms = {'READ', 'EXPORT', 'EDIT', 'DELETE', 'ADMIN'}
+
+print(can_execute(operador_perms, 'EDIT'))
+print(get_missing_perms(operador_perms, admin_perms))
+print(operador_perms < admin_perms)

@@ -1,0 +1,22 @@
+# Base de Teste Hospitalar
+amostra_ativos = [
+    {"id": "RESP_01", "setor": "UTI", "dias_sem_manutencao": 45, "calibrado": True},
+    {"id": "RESP_02", "setor": "UTI", "dias_sem_manutencao": 210, "calibrado": True},
+    {"id": "BOMB_01", "setor": "TRIAGEM", "dias_sem_manutencao": 30, "calibrado": False},
+    {"id": "MONI_01", "setor": "UTI", "dias_sem_manutencao": 100, "calibrado": True}
+]
+
+def auditar_patrimonio(amostra_ativos):
+    
+    conforme_geral = all(
+        ativo["dias_sem_manutencao"] <= 180
+        for ativo in amostra_ativos
+    )
+    
+    pendencias_uti = []
+    
+    for ativo in amostra_ativos:
+        if ativo["setor"] == "UTI" and ativo["dias_sem_manutencao"] > 180:
+            pendencias_uti.append(ativo["id"])
+    
+    return conforme_geral, pendencias_uti

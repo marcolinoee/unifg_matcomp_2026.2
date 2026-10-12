@@ -88,6 +88,8 @@ git push origin entrega-aula-01
 
 Para que sua atividade seja avaliada, certifique-se de cumprir todos os itens abaixo:
 
+Dupla: Fernando lauria
+
 - [ ] **Nomenclatura:** Sua pasta pessoal deve seguir o padrão `nome-sobrenome` (tudo minúsculo e com hífen). Pastas com nomes como *projeto1* ou *exercicios* serão desconsideradas.
 - [ ] **Não altere o alheio:** Você só tem permissão para criar e editar arquivos dentro da **sua** pasta pessoal.
 - [ ] **Comentários no PR:** No Pull Request, sinta-se à vontade para escrever as dificuldades que teve ou o que aprendeu de novo na semana.

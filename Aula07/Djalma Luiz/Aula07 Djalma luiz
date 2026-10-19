@@ -1,0 +1,23 @@
+1 A){2,3,4,5,6,7,8,10}
+   B){2}
+   C){4,6,8,10}
+   D){1,9}
+2 (A ∩ B) ∪ (A ∩ B') = A ∩ (B ∪ B')
+- E  B ∪ B' = U 
+
+- E  A ∩ U = A
+
+
+3 python
+def detectar_rotas_circulares(linhas: dict[str, list[str]]) -> set[tuple[str, str]]:
+    pares = set()
+    
+    for estacao, conexoes in linhas.items():
+        for vizinha in conexoes:
+            # Verifica se a volta também existe
+            if vizinha in linhas and estacao in linhas[vizinha]:
+                # Salva sempre na ordem alfabética pra não duplicar (A,B e B,A = mesmo par)
+                if estacao < vizinha:
+                    pares.add((estacao, vizinha))
+    
+    return pares
